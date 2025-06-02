@@ -2,7 +2,8 @@
 
 **LeetMetric** is a sleek, web-based dashboard to view and compare LeetCode user stats using only a username. It uses **HTML, CSS, JavaScript**, and **Chart.js** to visualize coding performance metrics.
 
-
+**Go and Check it out
+https://madhu9613.github.io/LeetMtrix/index.html
 
 
 ## 🌟 Features
