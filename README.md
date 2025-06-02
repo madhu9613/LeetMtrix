@@ -2,8 +2,6 @@
 
 **LeetMetric** is a sleek, web-based dashboard to view and compare LeetCode user stats using only a username. It uses **HTML, CSS, JavaScript**, and **Chart.js** to visualize coding performance metrics.
 
-![image](https://github.com/user-attachments/assets/e4972822-090c-452a-becd-b1aa1970889f)
-![image](https://github.com/user-attachments/assets/5b112983-b88c-41dd-9360-9fff661fffdd)
 
 
 
@@ -28,9 +26,11 @@
 
 ### 🔍 Single User Stats
 ![User Stats](screenshots/user-stats.png)
+![image](https://github.com/user-attachments/assets/e4972822-090c-452a-becd-b1aa1970889f)
 
 ### ⚔️ Compare Two Users
-![User Comparison](screenshots/user-compare.png)
+![image](https://github.com/user-attachments/assets/5b112983-b88c-41dd-9360-9fff661fffdd)
+
 
 ## 🛠️ Tech Stack
 
