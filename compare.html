@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Comparator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-bg: #1a1c24;
+            --secondary-bg: #252731;
+            --text-color: #e0f7fa;
+            --accent: #00bcd4;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+        }
+        * {
+            padding: 0px;
+            margin: 0px;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+
+        }
+
+        .nav-element {
+            display: flex;
+            gap: 2rem;
+            font-weight: 600;
+            font-size: xx-large;
+        }
+        .nav-element li a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 2px solid #00796b;
+    background-color: #00796b;
+    color: rgb(201, 233, 201);
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transform: scale(0.97);
+}
+
+
+.nav-element li a:hover {
+    background-color: #0097a7;
+    border-color: #0097a7;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.nav-element li a:active {
+    background-color: #00796b;
+    border: 2px solid black;
+    color: rgb(201, 233, 201);
+    transform: scale(0.97);
+}
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-bg);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: var(--primary-bg);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 2rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .stats-box {
+            flex: 1;
+            background: var(--primary-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-top: 10px;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LEET METRIC</h1>
+    <nav class="nav">
+        <ul class="nav-element">
+            <li><a href="index.html">User</a></li>
+            <li><a href="compare.html">Compare Users </a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>LeetCode Comparator</h1>
+        <div class="input-group">
+            <input type="text" id="user1" placeholder="Enter first username...">
+            <input type="text" id="user2" placeholder="Enter second username...">
+            <button id="compareBtn">Compare</button>
+        </div>
+        <div class="comparison-container">
+            <div class="stats-box">
+                <h3>User 1</h3>
+                <p>Total Solved: <span class="stat-value" id="solved1">0</span></p>
+                <p>Ranking: <span class="stat-value" id="rank1">#0</span></p>
+            </div>
+            <div class="stats-box">
+                <h3>User 2</h3>
+                <p>Total Solved: <span class="stat-value" id="solved2">0</span></p>
+                <p>Ranking: <span class="stat-value" id="rank2">#0</span></p>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas id="compareChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://leetcode-stats-api.herokuapp.com/';
+        const compareBtn = document.getElementById('compareBtn');
+        let compareChart = null;
+
+        async function fetchUserStats(username) {
+            const response = await fetch(`${API_BASE}${username}`);
+            return response.json();
+        }
+
+        async function compareUsers() {
+            const user1 = document.getElementById('user1').value.trim();
+            const user2 = document.getElementById('user2').value.trim();
+            if (!user1 || !user2) return;
+
+            compareBtn.disabled = true;
+            compareBtn.textContent = 'Loading...';
+
+            try {
+                const [data1, data2] = await Promise.all([fetchUserStats(user1), fetchUserStats(user2)]);
+
+                if (data1.status === 'error' || data2.status === 'error') {
+                    alert('One or both users not found');
+                    return;
+                }
+
+                document.getElementById('solved1').textContent = data1.totalSolved;
+                document.getElementById('rank1').textContent = `#${data1.ranking}`;
+                document.getElementById('solved2').textContent = data2.totalSolved;
+                document.getElementById('rank2').textContent = `#${data2.ranking}`;
+
+                updateChart(data1, data2);
+            } catch (error) {
+                alert('Failed to fetch data');
+            } finally {
+                compareBtn.disabled = false;
+                compareBtn.textContent = 'Compare';
+            }
+        }
+
+        function updateChart(data1, data2) {
+            if (compareChart) compareChart.destroy();
+
+            const ctx = document.getElementById('compareChart').getContext('2d');
+            compareChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Easy', 'Medium', 'Hard'],
+                    datasets: [
+                        {
+                            label: data1.username,
+                            data: [data1.easySolved, data1.mediumSolved, data1.hardSolved],
+                            backgroundColor: 'rgba(0, 188, 212, 0.8)'
+                        },
+                        {
+                            label: data2.username,
+                            data: [data2.easySolved, data2.mediumSolved, data2.hardSolved],
+                            backgroundColor: 'rgba(255, 87, 34, 0.8)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        compareBtn.addEventListener('click', compareUsers);
+    </script>
+</body>
+
+</html>

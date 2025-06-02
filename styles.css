@@ -1,0 +1,207 @@
+:root {
+    --primary-bg: #1a1c24;
+    --secondary-bg: #252731;
+    --text-color: #e0f7fa;
+    --accent: #00bcd4;
+    --accent-dark: #0097a7;
+    --accent-darker: #00796b;
+    --success: #4CAF50;
+    --warning: #FFC107;
+    --danger: #F44336;
+}
+
+/* Reset */
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* Body and container */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--primary-bg);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-weight: 900;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+}
+
+.container {
+    background: var(--secondary-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* Navigation */
+.nav {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.nav-element {
+    display: flex;
+    gap: 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    justify-content: center;
+}
+
+.nav-element li a {
+    display: inline-block;
+    padding: 10px 25px;
+    margin: 0 5px;
+    border: 2px solid var(--accent);
+    background-color: var(--accent);
+    color: white;
+    border-radius: 25px;
+    font-weight: bold;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-element li a:hover {
+    background-color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+.nav-element li a:active {
+    background-color: var(--accent-darker);
+    border-color: black;
+    color: rgb(201, 233, 201);
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+/* Search input and button */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+}
+
+#username {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+#username:focus {
+    border-color: var(--accent-dark);
+    outline: none;
+}
+
+#searchBtn {
+    padding: 12px 24px;
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: var(--primary-bg);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+#searchBtn:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-3px);
+}
+
+#searchBtn:active {
+    background-color: var(--accent-darker);
+    transform: scale(0.95);
+}
+
+/* Error message */
+.error-message {
+    color: var(--danger);
+    text-align: center;
+    margin: 1rem 0;
+    display: none; /* toggle via JS */
+}
+
+/* Stats grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: var(--primary-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.stat-value {
+    font-size: 2.4rem;
+    margin: 10px 0 0;
+    color: var(--accent);
+    font-weight: 900;
+}
+
+/* Dashboard */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-container {
+    background: var(--primary-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-element {
+        font-size: 1.2rem;
+    }
+}

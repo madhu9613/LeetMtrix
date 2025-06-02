@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Analytics Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>LEET METRIC</h1>
+      <nav class="nav">
+        <ul class="nav-element">
+            <li><a href="index.html">User </a></li>
+            <li><a href="compare.html">Compare Users</a></li>
+        </ul>
+      </nav>
+    <div class="container">
+        <div class="search-container">
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Enter LeetCode username...">
+                <button id="searchBtn">Analyze</button>
+            </div>
+            <div class="error-message" id="errorMsg"></div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Solved</div>
+                <div class="stat-value" id="totalSolved">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Acceptance Rate</div>
+                <div class="stat-value" id="acceptanceRate">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Contribution Points</div>
+                <div class="stat-value" id="contributionPoints">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Ranking</div>
+                <div class="stat-value" id="ranking">#0</div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="chart-container">
+                <canvas id="difficultyChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="solvedChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+   <script src="script.js"></script>
+</body>
+</html>
